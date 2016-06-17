@@ -11,6 +11,10 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all Docker containers being managed",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("list command")
+		listCommand()
 	},
+}
+
+func listCommand() {
+	fmt.Println("list command")
 }
