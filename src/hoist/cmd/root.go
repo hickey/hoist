@@ -2,7 +2,9 @@ package cmd
 
 import (
 	//"app"
+	"fmt"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var RootCmd = &cobra.Command{
@@ -22,10 +24,12 @@ var debug bool
 
 func init() {
 	cobra.OnInitialize()
-	RootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "Turn on verbose logging")
-	RootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "Print debugging logs")
+	RootCmd.PersistentFlags().BoolP("verbose", "v", false, "Turn on verbose logging")
+	RootCmd.PersistentFlags().BoolP("debug", "d", false, "Print debugging logs")
+	viper.BindPFlag("verbose", RootCmd.PersistentFlags().Lookup("verbose"))
+	viper.BindPFlag("debug", RootCmd.PersistentFlags().Lookup("debug"))
 }
 
 func processSwitches() {
-
+	fmt.Println("debug = ", viper.Get("debug"))
 }
