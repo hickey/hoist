@@ -1,7 +1,10 @@
 package cmd
 
-import "fmt"
-import "github.com/spf13/cobra"
+import (
+	"app"
+	"fmt"
+	"github.com/spf13/cobra"
+)
 
 var label string
 
@@ -21,4 +24,5 @@ var addCmd = &cobra.Command{
 func addCommand(args []string) {
 	fmt.Println("add command: ", args)
 	fmt.Println("labels: ", label)
+	fmt.Println("verbose: ", app.GetSettingBool("verbose"))
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"hoist/cmd"
+	"hoist/store"
 	"os"
 )
 
@@ -11,6 +12,6 @@ func main() {
 		fmt.Println(err)
 		os.Exit(-1)
 	}
-	fmt.Println("this is a test")
 
+	store.Start()
 }

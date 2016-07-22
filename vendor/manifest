@@ -8,6 +8,12 @@
 			"branch": "master"
 		},
 		{
+			"importpath": "github.com/boltdb/bolt",
+			"repository": "https://github.com/boltdb/bolt",
+			"revision": "3f7947a25d970e1e5f512276c14d5dcf731ccd5e",
+			"branch": "master"
+		},
+		{
 			"importpath": "github.com/cpuguy83/go-md2man/md2man",
 			"repository": "https://github.com/cpuguy83/go-md2man",
 			"revision": "2724a9c9051aa62e9cca11304e7dd518e9e41599",
@@ -23,7 +29,7 @@
 		{
 			"importpath": "github.com/hashicorp/hcl",
 			"repository": "https://github.com/hashicorp/hcl",
-			"revision": "d7400db7143f8e869812e50a53acd6c8d92af3b8",
+			"revision": "aa7699b7b62c5f410f4cf7b58f3f9b17a71fb4ad",
 			"branch": "master"
 		},
 		{
@@ -36,6 +42,12 @@
 			"importpath": "github.com/mitchellh/mapstructure",
 			"repository": "https://github.com/mitchellh/mapstructure",
 			"revision": "d2dd0262208475919e1a362f675cfc0e7c10e905",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/op/go-logging",
+			"repository": "https://github.com/op/go-logging",
+			"revision": "970db520ece77730c7e4724c61121037378659d9",
 			"branch": "master"
 		},
 		{
