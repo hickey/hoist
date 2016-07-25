@@ -2,6 +2,7 @@ package app
 
 import (
 	"github.com/op/go-logging"
+	"github.com/spf13/viper"
 	"sync"
 	"sync/atomic"
 )
@@ -40,7 +41,7 @@ func (o *Once) Start() {
 			`%{color}%{shortpkg}.%{longfunc} ▶ %{level:.5s} %{color:reset} %{message}`,
 		)
 		logging.SetFormatter(format)
-		switch GetSetting("logging.level") {
+		switch viper.Get("logging.level") {
 		case "CRITICAL":
 			log_level = logging.CRITICAL
 		case "ERROR":
@@ -53,6 +54,8 @@ func (o *Once) Start() {
 			log_level = logging.INFO
 		case "DEBUG":
 			log_level = logging.DEBUG
+		default:
+			log_level = logging.WARNING
 		}
 
 		logging.SetLevel(log_level, "")
@@ -62,10 +65,6 @@ func (o *Once) Start() {
 func GetWaitGroup() sync.WaitGroup {
 	return Objects.wg
 }
-
-//func GetSettings() *Settings {
-//	return &Objects.settings
-//}
 
 func GetLogger() *logging.Logger {
 	return &Objects.logger
