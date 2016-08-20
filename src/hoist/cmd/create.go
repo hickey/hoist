@@ -1,8 +1,9 @@
 package cmd
 
 import (
-	"app"
+	"errors"
 	"github.com/spf13/cobra"
+	"hoist/store"
 )
 
 func init() {
@@ -18,13 +19,13 @@ var createCmd = &cobra.Command{
 	},
 }
 
-func createCommand(args []string) {
+func createCommand(args []string) error {
+	if len(args) != 2 {
+		log.Error("Docker container needs to be specified")
+		return errors.New("bad arg")
+	}
 	name := args[0]
 	cont := args[1]
 
-	log := app.GetLogger()
-
-	log.Warningf("name = %s", name)
-	log.Warningf("cont = %s", cont)
-
+	return store.CreateStartup(name, cont)
 }
