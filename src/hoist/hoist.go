@@ -12,12 +12,14 @@ func main() {
 	// Initialize appl defaults
 	initializeViper()
 
+	store.Start()
+
 	if err := cmd.RootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(-1)
 	}
 
-	store.Start()
+	store.Stop()
 }
 
 func initializeViper() {
