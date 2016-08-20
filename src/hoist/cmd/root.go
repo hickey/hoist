@@ -1,9 +1,12 @@
 package cmd
 
 import (
+	"app"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
+
+var log = app.GetLogger()
 
 var RootCmd = &cobra.Command{
 	Use:   "hoist",
