@@ -10,8 +10,9 @@ func init() {
 }
 
 var dumpCmd = &cobra.Command{
-	Use:   "dump NAME",
-	Short: "Dump the BoltDB contents for NAME.",
+	Use:    "dump NAME",
+	Short:  "Dump the BoltDB contents for NAME.",
+	Hidden: true,
 	Run: func(cmd *cobra.Command, args []string) {
 		dumpCommand(args)
 	},

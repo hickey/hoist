@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
-	"hoist/store"
+	"github.com/spf13/viper"
+	//"hoist/store"
 )
 
 func init() {
@@ -21,13 +23,14 @@ func init() {
 }
 
 var deleteCmd = &cobra.Command{
-	Use:   "delete NAME",
-	Short: "Delete settings from a Docker container.",
+	Use:     "delete NAME",
+	Aliases: []string{"del"},
+	Short:   "Delete settings from a Docker container.",
 	Run: func(cmd *cobra.Command, args []string) {
 		deleteCommand(args)
 	},
 }
 
 func deleteCommand(name []string) {
-
+	fmt.Println("delete command")
 }
