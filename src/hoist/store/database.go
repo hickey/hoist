@@ -104,7 +104,7 @@ func DumpStartup(startup string) {
 }
 
 func addToStartupList(name string) {
-	startupNames := strings.Split(GetValue(prefsBucket, startupKey), arraySeperator)
+	startupNames := StartupList()
 	newList := append(startupNames, name)
 	err := SaveValue(prefsBucket, startupKey, strings.Join(newList, arraySeperator))
 	if err != nil {
@@ -114,4 +114,8 @@ func addToStartupList(name string) {
 
 func removeFromStartupList(name string) {
 
+}
+
+func StartupList() []string {
+	return strings.Split(GetValue(prefsBucket, startupKey), arraySeperator)
 }

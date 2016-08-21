@@ -1,7 +1,10 @@
 package cmd
 
-import "fmt"
-import "github.com/spf13/cobra"
+import (
+	"fmt"
+	"github.com/spf13/cobra"
+	"hoist/store"
+)
 
 func init() {
 	RootCmd.AddCommand(listCmd)
@@ -16,5 +19,8 @@ var listCmd = &cobra.Command{
 }
 
 func listCommand() {
-	fmt.Println("list command")
+	fmt.Println("Current list of managed containers:")
+	for _, container := range store.StartupList() {
+		fmt.Printf("\t%s\n", container)
+	}
 }
