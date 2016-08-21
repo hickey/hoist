@@ -8,7 +8,6 @@ import (
 )
 
 var db *bolt.DB
-var startupNames []string
 
 var arraySeperator = ";"
 var startupKey = "startup_list"
@@ -23,9 +22,6 @@ func Start() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	startupNames = strings.Split(GetValue(prefsBucket, startupKey), arraySeperator)
-	fmt.Printf("Startup names = %s\n", startupNames)
 
 	log.Debug("Database code started")
 }
@@ -70,8 +66,8 @@ func GetValue(startup string, name string) string {
 	db.View(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket([]byte(startup))
 		if bucket == nil {
-			log.Errorf("%s bucket does not exist", startup)
-			return fmt.Errorf("No bucket:%s", startup)
+			// if the bucket does not exist return nil
+			return nil
 		}
 
 		val = string(bucket.Get([]byte(name)))
@@ -104,9 +100,16 @@ func DumpStartup(startup string) {
 }
 
 func addToStartupList(name string) {
-	startupNames := StartupList()
-	newList := append(startupNames, name)
-	err := SaveValue(prefsBucket, startupKey, strings.Join(newList, arraySeperator))
+	var startupNames []string
+
+	startupNames = StartupList()
+	if startupNames[0] == "" {
+		// special case where new list gets empty value in [0]
+		startupNames = []string{name}
+	} else {
+		startupNames = append(startupNames, name)
+	}
+	err := SaveValue(prefsBucket, startupKey, strings.Join(startupNames, arraySeperator))
 	if err != nil {
 		log.Error(err)
 	}
