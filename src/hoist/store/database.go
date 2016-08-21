@@ -81,15 +81,16 @@ func GetValue(startup string, name string) string {
 }
 
 func DumpStartup(startup string) {
-	fmt.Println("Database representation")
-	fmt.Println(db.GoString())
-
 	err := db.View(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket([]byte(startup))
-		fmt.Printf("%s contents:", startup)
+		if bucket == nil {
+			return nil
+		}
+
+		fmt.Printf("%s contents:\n", startup)
 		fmt.Println("==============================")
 		bucket.ForEach(func(k, v []byte) error {
-			fmt.Printf("    %s = %s", string(k), string(v))
+			fmt.Printf("    %s = %s\n", string(k), string(v))
 			return nil
 		})
 		return nil
@@ -116,7 +117,18 @@ func addToStartupList(name string) {
 }
 
 func removeFromStartupList(name string) {
+	var startupNames []string
 
+	for _, container := range StartupList() {
+		if container != name {
+			startupNames = append(startupNames, container)
+		}
+	}
+
+	err := SaveValue(prefsBucket, startupKey, strings.Join(startupNames, arraySeperator))
+	if err != nil {
+		log.Error(err)
+	}
 }
 
 func StartupList() []string {
