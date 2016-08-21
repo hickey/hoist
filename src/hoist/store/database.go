@@ -4,7 +4,6 @@ import (
 	"app"
 	"fmt"
 	"github.com/boltdb/bolt"
-	"strings"
 )
 
 var db *bolt.DB
@@ -30,20 +29,7 @@ func Stop() {
 	db.Close()
 }
 
-func CreateStartup(name string, container string) error {
-	addToStartupList(name)
-	return SaveValue(name, "container", container)
-}
-
-func DestroyStartup(name string) error {
-	removeFromStartupList(name)
-	return db.Update(func(tx *bolt.Tx) error {
-		return tx.DeleteBucket([]byte(name))
-	})
-}
-
 func SaveValue(startup string, name string, value string) error {
-	fmt.Printf("DB = %s", db)
 	return db.Update(func(tx *bolt.Tx) error {
 		bucket, err := tx.CreateBucketIfNotExists([]byte(startup))
 		if err != nil {
@@ -98,39 +84,4 @@ func DumpStartup(startup string) {
 	if err != nil {
 		fmt.Println("Error: ", err)
 	}
-}
-
-func addToStartupList(name string) {
-	var startupNames []string
-
-	startupNames = StartupList()
-	if startupNames[0] == "" {
-		// special case where new list gets empty value in [0]
-		startupNames = []string{name}
-	} else {
-		startupNames = append(startupNames, name)
-	}
-	err := SaveValue(prefsBucket, startupKey, strings.Join(startupNames, arraySeperator))
-	if err != nil {
-		log.Error(err)
-	}
-}
-
-func removeFromStartupList(name string) {
-	var startupNames []string
-
-	for _, container := range StartupList() {
-		if container != name {
-			startupNames = append(startupNames, container)
-		}
-	}
-
-	err := SaveValue(prefsBucket, startupKey, strings.Join(startupNames, arraySeperator))
-	if err != nil {
-		log.Error(err)
-	}
-}
-
-func StartupList() []string {
-	return strings.Split(GetValue(prefsBucket, startupKey), arraySeperator)
 }
