@@ -30,7 +30,7 @@ func init() {
 
 var addCmd = &cobra.Command{
 	Use:   "add NAME",
-	Short: "Add a Docker container to be managed.",
+	Short: "Add a settings to a Docker container.",
 	Run: func(cmd *cobra.Command, args []string) {
 		addCommand(args)
 	},
